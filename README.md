@@ -100,5 +100,3 @@ open 1.1_什么是人工智能.html
 - 通过 GitHub Pages 提供在线访问
 
 ---
-
-*Made with curiosity and Claude*
