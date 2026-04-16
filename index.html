@@ -141,10 +141,10 @@ body{font-family:'Noto Sans SC',sans-serif;background:#1a1a2e;color:#333;overflo
 /* ===== PAGE LAYOUT ===== */
 .comic-page{
   max-width:960px;margin:0 auto;padding:74px 20px 30px;
-  min-height:100vh;opacity:0;transform:translateY(30px);
-  transition:opacity .6s,transform .6s;
+  min-height:auto;
 }
-.comic-page.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.comic-page.visible .page-header{animation:fadeSlideIn .5s ease-out}
 .page-header{text-align:center;margin-bottom:20px;padding-bottom:15px;border-bottom:3px solid var(--dark)}
 .page-chapter-tag{display:inline-block;padding:3px 14px;border-radius:20px;color:#fff;font-size:.72rem;font-weight:700;margin-bottom:8px}
 .ch-bg-1{background:var(--green)}.ch-bg-2{background:var(--blue)}
@@ -962,16 +962,28 @@ var observer=new IntersectionObserver(function(entries){
       });
     }
   });
-},{threshold:0.15});
+},{threshold:0,rootMargin:'0px 0px 200px 0px'});
 pages.forEach(function(p){observer.observe(p)});
 
-window.addEventListener('scroll',function(){
+// Fallback: also check visibility on scroll for browsers where observer might miss
+function checkVisibility(){
   var scrollTop=window.scrollY;
-  var docHeight=document.documentElement.scrollHeight-window.innerHeight;
+  var winH=window.innerHeight;
+  var docHeight=document.documentElement.scrollHeight-winH;
   var progress=docHeight>0?(scrollTop/docHeight)*100:0;
   progressBar.style.width=progress+'%';
   if(scrollTop>600){backTopBtn.classList.add('show')}else{backTopBtn.classList.remove('show')}
-});
+  // Force-show any page whose top is within 300px below viewport bottom
+  pages.forEach(function(p){
+    var rect=p.getBoundingClientRect();
+    if(rect.top < winH + 300 && rect.bottom > -300){
+      p.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll',checkVisibility);
+// Run once on load to show initial pages
+checkVisibility();
 </script>
 </body>
 </html>
