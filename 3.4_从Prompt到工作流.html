@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>3.4 从Prompt到工作流</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>3.4 从Prompt到工作流</h1><div class="sub">System Prompt · Prompt链 · 工作流 — 通向Agent的桥梁</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="b"><strong>小白：</strong>单次Prompt很有用了，什么时候需要更复杂的设计？</div><div class="b r"><strong>AI博士：</strong>当任务变复杂时，单次Prompt不够用了。你需要<em>把多个Prompt串联成工作流</em>——每步的输出作为下一步的输入。</div></div></div><div class="p sc-a"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">四个进化阶段</div><div class="fl"><div class="fs"><div class="icon">💬</div><h4>单次Prompt</h4><p>一问一答<br>最简单直接</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔗</div><h4>Prompt链</h4><p>多步串联<br>前步输出→后步输入</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">⚙️</div><h4>工作流</h4><p>条件分支+循环<br>自动化流程编排</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🤖</div><h4>Agent</h4><p>自主决策<br>动态规划+工具调用</p></div></div><div class="co co-b"><h4>💡 进化的核心区别</h4><b>Prompt链：</b>执行路径是人类预设的（A→B→C），确定性高<br><b>Agent：</b>执行路径是AI自主规划的，可能是A→C→B→D，灵活性高但可控性低<br><br>实际工程中，<b>两者经常混合使用</b>：确定性强的部分用工作流，需要灵活判断的部分交给Agent。</div></div></div><div class="p sc-d"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">System Prompt 设计</div><div class="b r"><strong>AI博士：</strong>System Prompt是Agent/工作流的<em>灵魂</em>——它定义了AI的核心行为。</div><div class="co co-g"><h4>📄 一个好的System Prompt包含</h4><b>1. 身份定义</b>：你是谁，你的专业领域<br>"你是一位专注于B2B SaaS的高级产品经理，有10年的企业软件经验"<br><br><b>2. 行为准则</b>：该做什么，不该做什么<br>"始终用数据支撑结论。不确定的信息要标注。不做医疗/法律建议。"<br><br><b>3. 输出规范</b>：默认的输出格式和风格<br>"回答结构：先给结论，再展开分析，最后给可执行建议。用中文回答。"<br><br><b>4. 知识边界</b>：知道什么和不知道什么<br>"你了解2024年之前的产品管理最佳实践。不了解公司内部数据，需要用户提供。"<br><br><b>5. 工具说明</b>（Agent场景）：可以调用什么工具<br>"你可以使用search_docs工具搜索内部文档，use_calculator进行计算"</div></div></div><div class="p sc-c"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">实战：Prompt 链案例</div><div class="co co-o"><h4>📋 案例：自动化竞品分析</h4><b>Step 1 - 信息提取：</b><br>"阅读以下竞品的官网介绍，提取：产品名称、核心功能、定价模式、目标客群。用JSON输出。"<br><br><b>Step 2 - 对比分析：</b><br>"基于以下产品信息JSON，用表格对比各产品在功能、定价、用户体验的优劣。"<br><br><b>Step 3 - 策略建议：</b><br>"基于以上竞品分析表，为我们的产品提出差异化策略建议，包含短期(3个月)和中期(12个月)计划。"<br><br><b>Step 4 - 报告生成：</b><br>"将以上所有分析整合为一份给CEO的竞品分析报告，包含执行摘要(200字)+详细分析+建议。"<br><br>🔑 每一步都用上一步的输出作为输入。这就是Prompt链——<b>人工编排的多步AI流程</b>。</div></div></div><div class="p sc-b"><span class="pn">5</span><div class="pi"><div class="co co-p"><h4>📝 第三章总结</h4>经过4节的学习，你已经掌握了Prompt工程的核心技能：<br><br>✅ <b>3.1</b> Prompt是什么 — 不只是问题，是角色+任务+约束+上下文+示例+格式<br>✅ <b>3.2</b> 设计原则 — CRAFT框架 + 5条黄金法则 + 高频模板<br>✅ <b>3.3</b> 进阶技巧 — Few-shot/CoT/结构化输出/组合技<br>✅ <b>3.4</b> 到工作流 — System Prompt设计 + Prompt链 + 通向Agent的桥梁<br><br>🔜 <b>下一章预告：</b>第四章<em>RAG检索增强生成</em>——解决大模型最大的痛点：知识过时和幻觉！</div></div></div></div></body></html>

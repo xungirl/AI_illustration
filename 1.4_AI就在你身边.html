@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>1.4 AI就在你身边</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>1.4 AI就在你身边</h1><div class="sub">你每天都在用的AI — 从手机到医院无处不在</div></div><div class="c"><div class="p sc-a"><span class="pn">1</span><div class="pi"><div class="b"><strong>小白：</strong>说了这么多技术，AI现在到底用在哪里？我日常能接触到吗？</div><div class="b r"><strong>AI博士：</strong>你可能没意识到，但<em>你每天至少和AI交互上百次</em>！从解锁手机的第一秒开始……</div></div></div><div class="p sc-f"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">你的 AI 一天</div><table class="tb"><tr><th>时间</th><th>场景</th><th>背后的AI</th><th>技术</th></tr><tr><td>🌅 7:00</td><td>Face ID解锁手机</td><td>3D人脸识别模型</td><td>CV + 深度学习</td></tr><tr><td>🚗 7:30</td><td>高德导航避开堵车</td><td>实时路况预测模型</td><td>时序预测 + 图神经网络</td></tr><tr><td>📱 8:00</td><td>刷抖音/小红书</td><td>个性化推荐引擎</td><td>协同过滤 + 深度学习</td></tr><tr><td>💬 9:00</td><td>问Claude写方案</td><td>大语言模型</td><td>Transformer + RLHF</td></tr><tr><td>📧 10:00</td><td>邮箱自动过滤垃圾</td><td>垃圾邮件分类器</td><td>NLP + 分类算法</td></tr><tr><td>📷 12:00</td><td>手机拍照自动优化</td><td>计算摄影AI</td><td>CV + 超分辨率</td></tr><tr><td>🛒 14:00</td><td>淘宝猜你喜欢</td><td>推荐系统</td><td>用户行为建模</td></tr><tr><td>🎵 18:00</td><td>网易云日推歌单</td><td>音乐推荐模型</td><td>协同过滤 + 内容理解</td></tr><tr><td>🗣️ 21:00</td><td>对小爱同学说晚安</td><td>语音识别+意图理解</td><td>ASR + NLU</td></tr></table></div></div><div class="p sc-b"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">企业级 AI 应用</div><div class="tg"><div class="tc"><div class="icon">🏥</div><h4>医疗AI</h4><p>CT/X光AI辅助诊断<br>准确率部分已超医生<br>新药研发加速10倍<br>蛋白质结构预测(AlphaFold)</p></div><div class="tc"><div class="icon">🏦</div><h4>金融AI</h4><p>智能风控反欺诈<br>量化交易策略<br>智能客服理赔<br>信用评估模型</p></div><div class="tc"><div class="icon">🏭</div><h4>工业AI</h4><p>产品质检(视觉检测)<br>预测性维护<br>供应链优化<br>数字孪生仿真</p></div><div class="tc"><div class="icon">🎓</div><h4>教育AI</h4><p>个性化学习路径<br>AI批改作文<br>智能出题组卷<br>语言学习伙伴</p></div></div></div></div><div class="p sc-c"><span class="pn">4</span><div class="pi"><div class="b"><strong>小白：</strong>那在企业内部，AI能怎么用？跟我们工作有什么关系？</div><div class="b r"><strong>AI博士：</strong>这是最实际的问题！AI正在重塑几乎所有岗位的工作方式 👇</div><div class="co co-b"><h4>💼 AI对不同岗位的影响</h4>👨‍💻 <b>开发者</b>：AI编程助手（Copilot/Cursor）→ 代码生成、Debug、Review效率提升3-10倍<br>📝 <b>运营/市场</b>：AI文案生成、数据分析、竞品监控 → 重复工作减少70%<br>🎨 <b>设计师</b>：AI辅助设计、快速原型 → 方案产出速度翻倍<br>📊 <b>数据分析师</b>：自然语言查数据库、自动报表 → 分析门槛大幅降低<br>🤝 <b>客服/销售</b>：AI客服处理80%常见问题 → 人工专注高价值客户<br>👔 <b>管理者</b>：AI辅助决策、会议纪要、知识管理 → 信息处理效率跃升</div></div></div><div class="p sc-d"><span class="pn">5</span><div class="pi"><div class="sfx" style="text-align:center">AI 采用现状（2026）</div><div class="stat"><div class="stat-item"><div class="num">92%</div><div class="label">开发者使用AI工具</div></div><div class="stat-item"><div class="num">65%</div><div class="label">企业已部署AI应用</div></div><div class="stat-item"><div class="num">$300B</div><div class="label">全球AI市场规模</div></div><div class="stat-item"><div class="num">3.7x</div><div class="label">AI辅助vs不用AI<br>的效率差距</div></div></div><div class="ib">⚠️ <b>重要认知：</b>AI不会替代你，但<b>会用AI的人会替代不会用AI的人</b>。现在学习AI不是"加分项"，而是"必修课"。</div></div></div><div class="p sc-a"><span class="pn">6</span><div class="pi"><div class="b"><strong>小白：</strong>那对我们普通人来说，应该怎么开始学AI？</div><div class="b r"><strong>AI博士：</strong>不需要成为AI工程师！对大多数人来说，掌握这三个层次就够了：</div><div class="co co-g"><h4>🎯 AI学习三层次</h4><b>第一层：会用</b>（所有人都应该掌握）<br>• 熟练使用ChatGPT/Claude等对话AI<br>• 会写好的Prompt获得高质量输出<br>• 了解AI的能力边界和局限<br><br><b>第二层：会选</b>（团队负责人/产品经理）<br>• 知道什么场景适合用什么AI<br>• 能评估AI方案的可行性和ROI<br>• 了解RAG、Agent等架构模式<br><br><b>第三层：会建</b>（技术人员）<br>• 能搭建AI应用（API调用、RAG系统）<br>• 能构建Agent和设计Harness<br>• 能进行模型微调和优化</div></div></div><div class="p sc-b"><span class="pn">7</span><div class="pi"><div class="co co-p"><h4>📝 第一章总结</h4>经过4节的学习，你已经掌握了AI的基础认知：<br><br>✅ <b>1.1</b> AI是什么 — 让计算机模拟人类智能的技术，当前是弱AI阶段<br>✅ <b>1.2</b> AI怎么学 — 机器学习三范式 + 深度学习 + Transformer<br>✅ <b>1.3</b> AI有哪些 — CV/NLP/生成式AI/RL四大分支 + 多模态融合趋势<br>✅ <b>1.4</b> AI在哪里 — 从手机到企业无处不在，学AI是必修课<br><br>🔜 <b>下一章预告：</b>第二章将深入<em>大语言模型(LLM)</em>——当前AI浪潮的核心引擎。你将了解GPT/Claude等模型为什么这么强大！</div></div></div></div></body></html>

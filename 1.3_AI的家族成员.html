@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>1.3 AI的家族成员</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>1.3 AI的家族成员</h1><div class="sub">NLP · CV · 生成式AI · 强化学习 — 各显神通的技术分支</div></div><div class="c"><div class="p sc-a"><span class="pn">1</span><div class="pi"><div class="b r"><strong>AI博士：</strong>AI是一个大家族，不同成员擅长不同领域。理解它们各自的能力和应用场景，能帮你判断什么问题该用什么AI来解决。</div><div class="b"><strong>小白：</strong>有哪些主要的分支？</div></div></div><div class="p sc-e"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">四大核心分支</div><div class="tg"><div class="tc"><div class="icon">👀</div><h4>计算机视觉 (CV)</h4><p>让AI<b>看懂</b>世界<br><br>• 图像分类与目标检测<br>• 人脸识别与表情分析<br>• 医学影像诊断<br>• 自动驾驶环境感知<br>• OCR文字识别<br>• 视频理解与分析<br><br><span class="tag-b tag">CNN</span><span class="tag tag">ViT</span><span class="tag-g tag">YOLO</span></p></div><div class="tc"><div class="icon">💬</div><h4>自然语言处理 (NLP)</h4><p>让AI<b>读懂</b>人话<br><br>• 机器翻译<br>• 文本分类与情感分析<br>• 问答系统与搜索<br>• 命名实体识别<br>• 文本摘要<br>• 对话系统<br><br><span class="tag tag">BERT</span><span class="tag-g tag">GPT</span><span class="tag-b tag">LLM</span></p></div><div class="tc"><div class="icon">🎨</div><h4>生成式AI (GenAI)</h4><p>让AI<b>创造</b>内容<br><br>• 文本生成(ChatGPT)<br>• 图像生成(Midjourney)<br>• 代码生成(Copilot)<br>• 视频生成(Sora)<br>• 音乐生成(Suno)<br>• 3D生成<br><br><span class="tag-r tag">最火</span><span class="tag-o tag">Diffusion</span><span class="tag tag">LLM</span></p></div><div class="tc"><div class="icon">🎮</div><h4>强化学习 (RL)</h4><p>让AI<b>试错进化</b><br><br>• 游戏AI(AlphaGo)<br>• 机器人控制<br>• 推荐系统优化<br>• 自动交易策略<br>• RLHF(训练LLM)<br>• 自动驾驶决策<br><br><span class="tag-o tag">奖励函数</span><span class="tag-g tag">PPO</span></p></div></div></div></div><div class="p sc-b"><span class="pn">3</span><div class="pi"><div class="b"><strong>小白：</strong>这些技术之间是什么关系？会互相交叉吗？</div><div class="co co-b"><h4>🔗 技术交叉关系</h4>• <b>多模态AI</b>：CV + NLP = 能看图说话（GPT-4o、Gemini）<br>• <b>RLHF</b>：强化学习 + NLP = 让大模型回答更好（ChatGPT的秘密武器）<br>• <b>文生图</b>：NLP + CV + 生成式AI = 文字描述生成图片（Midjourney）<br>• <b>AI Agent</b>：NLP + 强化学习 + 工具调用 = 自主行动的智能体<br>• <b>具身智能</b>：CV + RL + 机器人 = 能感知和行动的物理AI<br><br>🔑 <b>趋势：</b>2024-2026年的大方向是<b>多模态融合</b>——AI不再只懂文字，而是同时理解文字、图片、语音、视频、代码。</div></div></div><div class="p sc-d"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">各领域代表产品</div><table class="tb"><tr><th>领域</th><th>代表产品/模型</th><th>核心技术</th><th>应用场景</th></tr><tr><td>💬 NLP/LLM</td><td>ChatGPT, Claude, 文心一言</td><td>Transformer, RLHF</td><td>写作、问答、编程、翻译</td></tr><tr><td>🎨 图像生成</td><td>Midjourney, DALL-E 3, SD</td><td>Diffusion Model</td><td>设计、插画、广告</td></tr><tr><td>🎬 视频生成</td><td>Sora, Runway, Pika</td><td>DiT + Diffusion</td><td>短视频、广告、电影</td></tr><tr><td>👀 视觉理解</td><td>GPT-4o, Gemini, SAM</td><td>ViT, CLIP</td><td>识别、分割、分析</td></tr><tr><td>💻 AI编程</td><td>Copilot, Cursor, Claude Code</td><td>Code LLM + Agent</td><td>写代码、调试、重构</td></tr><tr><td>🎵 音乐/语音</td><td>Suno, ElevenLabs</td><td>Audio Transformer</td><td>作曲、配音、TTS</td></tr></table></div></div><div class="p sc-c"><span class="pn">5</span><div class="pi"><div class="b r"><strong>AI博士：</strong>2022年以来最大的变革是<em>生成式AI</em>的爆发。之前AI主要做"分析"（这是猫还是狗？），现在AI能做"创造"（画一只穿西装的猫）。这彻底改变了AI的应用范围。</div><div class="co co-o"><h4>🚀 生成式AI的革命性在哪？</h4><b>之前的AI：</b>分类、检测、预测 → 从已有选项中<b>选择</b><br><b>生成式AI：</b>创作、合成、生产 → 从零<b>创造</b>全新内容<br><br>这意味着AI从"分析工具"变成了"创作伙伴"——每个人都拥有了一个全能助手！</div></div></div><div class="p sc-a"><span class="pn">6</span><div class="pi"><div class="co co-g"><h4>🔮 2026年的趋势方向</h4>1️⃣ <b>多模态统一</b>：一个模型同时处理文字、图片、视频、音频<br>2️⃣ <b>AI Agent化</b>：从能"说"到能"做"，AI开始操作真实系统<br>3️⃣ <b>端侧AI</b>：AI模型部署到手机、PC上，不依赖云端<br>4️⃣ <b>垂直行业深耕</b>：医疗AI、法律AI、金融AI专业化<br>5️⃣ <b>Harness工程</b>：从模型能力到生产可靠性的系统化</div><div class="b r"><strong>AI博士：</strong>下一节来看看<em>AI在你身边的真实应用</em>——你可能已经在天天用AI了！👉</div></div></div></div></body></html>

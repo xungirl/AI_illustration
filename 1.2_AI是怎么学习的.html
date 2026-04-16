@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>1.2 AI是怎么学习的？</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>1.2 AI是怎么学习的？</h1><div class="sub">Machine Learning — 从数据中自动发现规律的技术</div></div><div class="c"><div class="p sc-a"><span class="pn">1</span><div class="pi"><div class="b"><strong>小白：</strong>上节说AI通过数据学习，具体是怎么"学"的？跟人学习有什么区别？</div><div class="b r"><strong>AI博士：</strong><em>机器学习（Machine Learning）</em>的核心思想：不是人写规则告诉机器怎么做，而是<em>给机器大量数据，让它自己发现规律</em>。这是AI从"编程时代"到"训练时代"的根本转变。</div><div class="vs"><div class="vs-s l"><div class="bi">👨‍💻</div><h4 style="color:var(--red)">传统编程</h4><p>人写规则 → 程序执行<br>if 下雨 then 带伞<br>规则越多越难维护<br><b>人定义"怎么做"</b></p></div><div class="vs-m">VS</div><div class="vs-s r"><div class="bi">🤖</div><h4 style="color:var(--green)">机器学习</h4><p>数据+标签 → 模型自己学<br>看10万张图片自己认猫<br>数据越多越准确<br><b>数据定义"怎么做"</b></p></div></div></div></div><div class="p sc-b"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">机器学习三步曲</div><div class="fl"><div class="fs"><div class="icon">📊</div><h4>1. 准备数据</h4><p>收集&清洗&标注<br>这步最耗时(80%)</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">⚙️</div><h4>2. 训练模型</h4><p>算法从数据中<br>学习特征和规律</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">📈</div><h4>3. 评估优化</h4><p>在测试集上验证<br>不断调参提升</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🚀</div><h4>4. 部署使用</h4><p>模型上线服务<br>对新数据做预测</p></div></div><div class="ib">🐱 <b>经典案例——猫狗识别：</b><br>① 收集10万张猫和狗的照片，每张标注"猫"或"狗"<br>② 将数据分为训练集(80%)和测试集(20%)<br>③ 模型在训练集上学习——第1轮可能只有50%准确率，第100轮达到95%<br>④ 在测试集上验证，确保模型不是"死记硬背"而是真的学会了<br>⑤ 部署后，给一张从没见过的照片也能准确判断猫或狗</div></div></div><div class="p sc-c"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">三大学习范式</div><div class="tg"><div class="tc"><div class="icon">📚</div><h4>监督学习</h4><p><b>有老师教</b><br>每条数据都有正确答案<br>模型学习输入→输出的映射<br><br>典型任务：分类、回归<br>例：垃圾邮件识别、房价预测<br><span class="tag-b tag">最成熟</span><span class="tag-g tag">应用最广</span></p></div><div class="tc"><div class="icon">🔍</div><h4>无监督学习</h4><p><b>自学成才</b><br>数据没有标签<br>模型自己发现隐藏结构<br><br>典型任务：聚类、降维<br>例：用户分群、异常检测<br><span class="tag tag">探索性</span><span class="tag-o tag">数据挖掘</span></p></div><div class="tc"><div class="icon">🎮</div><h4>强化学习</h4><p><b>试错进步</b><br>通过奖励/惩罚信号学习<br>在环境中不断试验<br><br>典型任务：博弈、控制<br>例：AlphaGo、机器人控制<br><span class="tag-r tag">最难</span><span class="tag tag">潜力最大</span></p></div></div><div class="ib">🆕 还有一种重要的范式叫<b>自监督学习(Self-supervised Learning)</b>——大模型就是用这种方式训练的！不需要人工标注，通过"遮住一个字让模型猜"来自动生成训练目标。这让AI可以利用互联网上海量的无标注文本来学习。</div></div></div><div class="p sc-d"><span class="pn">4</span><div class="pi"><div class="b"><strong>小白：</strong>深度学习和机器学习是什么关系？</div><div class="b r"><strong>AI博士：</strong><em>深度学习(Deep Learning)</em>是机器学习的一个子集，使用<em>多层神经网络</em>来学习。"深"指的是网络层数多（几十到几百层）。它是当前AI最强大的技术！</div><div class="co co-b"><h4>🧠 神经网络怎么工作？（简化版）</h4><b>灵感来源：</b>模拟人脑神经元的连接方式<br><br>输入层（接收数据）→ 隐藏层1（提取基础特征）→ 隐藏层2（提取高级特征）→ … → 输出层（做出判断）<br><br><b>以图像识别为例：</b><br>第1层：识别边缘和线条<br>第2层：识别眼睛、耳朵等部件<br>第3层：组合部件识别整体形状<br>第4层：判断这是"猫"<br><br>每一层自动提取越来越抽象的特征——这就是"深度"的威力！</div></div></div><div class="p sc-e"><span class="pn">5</span><div class="pi"><div class="sfx" style="text-align:center">关键突破：Transformer</div><div class="b r"><strong>AI博士：</strong>2017年Google发表了一篇论文<em>《Attention Is All You Need》</em>，提出了<em>Transformer架构</em>——这改变了一切。</div><div class="co co-o"><h4>⚡ 为什么Transformer这么重要？</h4>1️⃣ <b>注意力机制(Attention)</b>：让模型能关注输入中最相关的部分，而不是逐字顺序处理<br>2️⃣ <b>并行计算</b>：之前的RNN必须逐步处理，Transformer可以同时处理所有位置，训练速度飙升<br>3️⃣ <b>可扩展性</b>：模型越大、数据越多，效果越好——这催生了"大力出奇迹"的大模型路线<br><br>🏗️ <b>基于Transformer构建的模型：</b><br>• GPT系列（Decoder-only）→ 文本生成、ChatGPT<br>• BERT（Encoder-only）→ 文本理解、搜索<br>• T5/BART（Encoder-Decoder）→ 翻译、摘要</div></div></div><div class="p sc-b"><span class="pn">6</span><div class="pi"><div class="sfx" style="text-align:center">模型怎么"学习"？</div><div class="b r"><strong>AI博士：</strong>不管多复杂的模型，学习过程的本质都一样——<em>不断调整参数，让预测结果更接近正确答案</em>。</div><div class="co co-g"><h4>🔄 训练循环（Training Loop）</h4>① <b>前向传播</b>：数据通过网络得到预测结果<br>② <b>计算损失</b>：预测结果和正确答案对比，算出"错了多少"<br>③ <b>反向传播</b>：计算每个参数对错误的"贡献"（梯度）<br>④ <b>更新参数</b>：根据梯度调整参数，让下次预测更准<br>⑤ <b>重复</b>：以上步骤重复数百万次，直到模型收敛<br><br>💡 <b>类比：</b>就像练投篮——投一球(前向)→看偏了多少(损失)→分析是力度还是角度不对(反向)→调整姿势(更新)→再投(重复)。几万次后就能百发百中！</div></div></div><div class="p sc-c"><span class="pn">7</span><div class="pi"><div class="b"><strong>小白：</strong>那过拟合和欠拟合是什么意思？经常听到这两个词。</div><div class="vs"><div class="vs-s l"><div class="bi">📖</div><h4 style="color:var(--red)">过拟合(Overfitting)</h4><p><b>死记硬背型</b><br>训练数据上99%<br>新数据上60%<br>模型记住了答案<br>而不是学会了规律<br><br>解决：更多数据、正则化<br>Dropout、早停</p></div><div class="vs-m">VS</div><div class="vs-s r"><div class="bi">😴</div><h4 style="color:var(--blue)">欠拟合(Underfitting)</h4><p><b>学渣型</b><br>训练数据上60%<br>新数据上55%<br>模型太简单<br>没学到有用的东西<br><br>解决：更复杂模型<br>更多特征、更长训练</p></div></div><div class="b r"><strong>AI博士：</strong>好的模型要找到<em>恰好的平衡</em>——既不死记硬背，也不马虎了事。这叫做<em>泛化能力(Generalization)</em>，是评价模型好坏的核心指标。</div></div></div><div class="p sc-a"><span class="pn">8</span><div class="pi"><div class="co co-p"><h4>📝 本节要点回顾</h4>✅ 机器学习 = 从数据中自动发现规律，不需要人写规则<br>✅ 三大范式：监督学习（有标签）、无监督学习（无标签）、强化学习（奖惩信号）<br>✅ 深度学习用多层神经网络自动提取特征，是当前AI的核心技术<br>✅ Transformer（2017）通过注意力机制+并行计算，催生了大模型时代<br>✅ 训练本质：前向→算损失→反向传播→更新参数，重复百万次<br>✅ 好模型要有泛化能力：既不过拟合也不欠拟合</div><div class="b r"><strong>AI博士：</strong>下一节我们来认识<em>AI家族的所有成员</em>——NLP、CV、生成式AI各自在做什么，它们之间有什么关系！👉</div></div></div></div></body></html>

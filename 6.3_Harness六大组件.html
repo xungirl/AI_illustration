@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>6.3 Harness六大组件</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>6.3 Harness六大组件</h1><div class="sub">Guides · Sensors · 上下文 · 工具 · 审批 · 生命周期</div></div><div class="c"><div class="p sc-e"><span class="pn">1</span><div class="pi"><div class="sfx" style="text-align:center">六大组件全景</div><div class="tg"><div class="tc"><div class="icon">📖</div><h4>Guides（引导）</h4><p><b>告诉Agent该做什么</b><br>System Prompt<br>CLAUDE.md / AGENTS.md<br>规则和约束文档<br>知识背景信息<br><span class="tag tag">方向盘</span></p></div><div class="tc"><div class="icon">📡</div><h4>Sensors（传感器）</h4><p><b>检测Agent做得对不对</b><br>输出格式验证<br>事实性检查<br>指令遵循度监控<br>上下文漂移检测<br><span class="tag-r tag">仪表盘</span></p></div><div class="tc"><div class="icon">🧠</div><h4>上下文工程</h4><p><b>管理Agent看到什么</b><br>上下文窗口管理<br>记忆压缩和检索<br>防止上下文腐烂<br>信息优先级排序<br><span class="tag-b tag">信息中枢</span></p></div><div class="tc"><div class="icon">🔧</div><h4>工具编排</h4><p><b>管理Agent能做什么</b><br>工具注册和路由<br>调用链编排<br>错误处理和重试<br>超时和降级<br><span class="tag-g tag">手脚</span></p></div><div class="tc"><div class="icon">👤</div><h4>人类审批</h4><p><b>关键操作人工确认</b><br>删除？发送？支付？<br>分级审批策略<br>审批队列管理<br>超时自动拒绝<br><span class="tag-o tag">安全网</span></p></div><div class="tc"><div class="icon">🔄</div><h4>生命周期管理</h4><p><b>管理Agent的生死</b><br>启动/暂停/恢复/终止<br>Checkpoint保存<br>失败自动回退<br>超时强制终止<br><span class="tag-r tag">生死簿</span></p></div></div></div></div><div class="p sc-c"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">Sensors：2026的关键发现</div><div class="b r"><strong>AI博士：</strong><em>Sensors（传感器）</em>是2026年最重要的新发现——Anthropic的研究表明，<em>上下文窗口退化（Context Rot）</em>是一个Sensor问题。</div><div class="co co-o"><h4>🔍 什么是上下文退化？</h4>Agent执行长任务时，上下文中积累了大量历史信息。随着时间推移：<br><br>• <b>旧信息变得陈旧</b>：第5步搜到的数据到第50步可能已经不相关<br>• <b>噪声信息累积</b>：失败的尝试、无关的中间结果占据空间<br>• <b>指令被稀释</b>：初始指令在百步之后被模型"遗忘"<br><br><b>解决方案不是更好的模型，而是更好的Sensor：</b><br>• 监测上下文质量分数，低于阈值时触发清理<br>• 定期重申核心指令<br>• 自动摘要和丢弃过时信息</div></div></div><div class="p sc-a"><span class="pn">3</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ Harness六大组件：Guides/Sensors/上下文/工具/审批/生命周期<br>✅ Guides = 方向盘（告诉Agent该做什么）<br>✅ Sensors = 仪表盘（检测Agent做得对不对）——2026最关键的发现<br>✅ 上下文退化(Context Rot)是长任务失败的主因，需要Sensor监控<br>✅ 人类审批是安全底线：危险操作必须人工确认</div><div class="b r"><strong>AI博士：</strong>下一节讲<em>Harness的具体工程实践</em>——CLAUDE.md、Hooks、Checkpoint怎么用！👉</div></div></div></div></body></html>

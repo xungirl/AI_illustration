@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>3.3 常用Prompt技巧</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>3.3 常用Prompt技巧</h1><div class="sub">Few-shot · CoT · 结构化输出 — 进阶技术详解</div></div><div class="c"><div class="p sc-a"><span class="pn">1</span><div class="pi"><div class="b r"><strong>AI博士：</strong>基础Prompt能解决60%的问题，加上这几个进阶技巧能解决90%。</div><div class="tg"><div class="tc"><div class="icon">📝</div><h4>Few-shot Learning</h4><p>给AI几个示例<br>让它模仿模式<br><span class="tag-g tag">最实用</span></p></div><div class="tc"><div class="icon">🔗</div><h4>CoT 思维链</h4><p>让AI展示推理过程<br>一步步逻辑推导<br><span class="tag tag">效果最强</span></p></div><div class="tc"><div class="icon">📊</div><h4>结构化输出</h4><p>指定JSON/XML/表格<br>方便程序处理<br><span class="tag-b tag">工程必备</span></p></div><div class="tc"><div class="icon">🔄</div><h4>Self-Consistency</h4><p>让AI多次推理<br>投票选最佳答案<br><span class="tag-o tag">高准确率</span></p></div></div></div></div><div class="p sc-b"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">Few-shot 详解</div><div class="co co-g"><h4>📝 Few-shot = 给AI看几个例子再让它做</h4><b>Zero-shot（零样本）：</b>直接问，不给例子<br>"判断这句话的情感：这个产品太差了" → 负面<br><br><b>One-shot（一个例子）：</b><br>"例：这部电影太精彩了 → 正面<br>请判断：这个产品太差了 → ?"<br><br><b>Few-shot（多个例子）：</b><br>"例1：味道很好吃 → 正面<br>例2：等了两小时 → 负面<br>例3：还行吧 → 中性<br>请判断：性价比超高的 → ?"<br><br>🔑 <b>关键：</b>例子要覆盖不同类型和边界情况，3-5个通常足够。例子的格式就是你期望的输出格式——AI会严格模仿。</div></div></div><div class="p sc-c"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">CoT 思维链详解</div><div class="co co-o"><h4>🔗 CoT = 让AI"展示解题步骤"</h4><b>不用CoT：</b><br>"一个商店有15个苹果，卖了8个，又进了12个，问还有多少？" → "19个"<br><br><b>用CoT：</b><br>"一个商店有15个苹果，卖了8个，又进了12个，问还有多少？请一步一步推理。"<br>→ "让我一步步分析：<br>第一步：初始有15个苹果<br>第二步：卖了8个，剩下15-8=7个<br>第三步：又进了12个，7+12=19个<br>所以还有19个苹果。"<br><br>🔑 <b>为什么CoT有效？</b><br>1. 逼迫模型进行中间推理而不是直接跳到结论<br>2. 中间步骤可以被检查，发现逻辑错误<br>3. 复杂推理任务准确率可提升<b>20-40%</b><br><br>📌 <b>触发词：</b>"请一步一步思考"/"Let's think step by step"/"先分析再给结论"</div></div></div><div class="p sc-d"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">结构化输出详解</div><div class="b r"><strong>AI博士：</strong>当AI的输出需要被程序处理时，<em>结构化输出</em>是必须的。</div><div class="co co-b"><h4>📊 常用结构化格式</h4><b>JSON格式：</b>（最常用，API友好）<br>"分析以下评论的情感和关键词，以JSON返回：<br>{&quot;sentiment&quot;: &quot;正面/负面/中性&quot;, &quot;keywords&quot;: [...], &quot;confidence&quot;: 0.0-1.0}"<br><br><b>Markdown表格：</b>（适合人工阅读）<br>"用表格对比方案A和B：| 维度 | 方案A | 方案B |"<br><br><b>YAML/XML：</b>（配置文件、文档结构）<br>"以YAML格式输出API接口定义"<br><br>🔑 <b>技巧：</b>在Prompt中直接给出输出的<b>schema（模板）</b>，AI会严格遵循。比直接说"用JSON返回"效果好得多。</div></div></div><div class="p sc-e"><span class="pn">5</span><div class="pi"><div class="sfx" style="text-align:center">高级技巧组合</div><div class="co co-p"><h4>🚀 实战组合技</h4><b>① CoT + Few-shot：</b>给几个带推理过程的示例，AI会模仿同样的推理深度<br><br><b>② 角色 + CoT + 结构化：</b>"你是资深审计师，请逐条审查以下合同条款，用表格列出：条款编号/风险等级/问题描述/修改建议。请先分析再给结论。"<br><br><b>③ Self-Consistency：</b>让AI生成3次，取共识答案——适合数学推理等有唯一正确答案的场景<br><br><b>④ ReAct模式：</b>"思考→行动→观察→再思考"——这就是Agent的核心Prompt模式（第5章详讲）</div></div></div><div class="p sc-a"><span class="pn">6</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ Few-shot：给3-5个示例，AI严格模仿格式和模式<br>✅ CoT：让AI展示推理步骤，复杂问题准确率提升20-40%<br>✅ 结构化输出：指定JSON/表格/YAML，给出schema模板最有效<br>✅ 组合技效果最佳：角色+CoT+Few-shot+结构化<br>✅ ReAct模式是Agent Prompt的核心范式</div><div class="b r"><strong>AI博士：</strong>下一节从单次Prompt升级到<em>工作流</em>——System Prompt设计+多步串联+Prompt到Agent的进化！👉</div></div></div></div></body></html>

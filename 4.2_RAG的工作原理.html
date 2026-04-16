@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>4.2 RAG的工作原理</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>4.2 RAG的工作原理</h1><div class="sub">索引 → 检索 → 增强 → 生成 — 完整工作流拆解</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="b r"><strong>AI博士：</strong>RAG系统分为两个阶段：<em>离线索引</em>（提前准备知识库）和<em>在线查询</em>（实时回答问题）。</div><div class="co co-b"><h4>🏗️ 阶段一：离线索引（Indexing）—— 建图书馆</h4>1️⃣ <b>文档加载</b>：导入PDF、Word、网页、数据库等各种格式<br>2️⃣ <b>文档切片</b>：把长文档切成小段（Chunk），通常200-1000字<br>3️⃣ <b>Embedding</b>：把每个Chunk转成向量（一组数字）<br>4️⃣ <b>存入向量数据库</b>：Chunk文本+向量一起存储和索引<br><br>这个过程只需做一次（或文档更新时增量更新），相当于建好一个可以语义搜索的图书馆。</div></div></div><div class="p sc-a"><span class="pn">2</span><div class="pi"><div class="co co-g"><h4>🔍 阶段二：在线查询（Querying）—— 去图书馆查资料</h4>1️⃣ <b>用户提问</b>："公司的年假政策是什么？"<br>2️⃣ <b>Query Embedding</b>：把问题也转成向量<br>3️⃣ <b>向量检索</b>：在向量数据库中找到最相似的Top-K个Chunk<br>4️⃣ <b>Prompt组装</b>：把检索到的Chunk拼到Prompt里<br>&nbsp;&nbsp;&nbsp;"根据以下参考资料回答用户问题：
+[Chunk1] [Chunk2] [Chunk3]
+用户问题：公司的年假政策是什么？"<br>5️⃣ <b>LLM生成</b>：大模型基于参考资料生成回答<br>6️⃣ <b>返回结果</b>：回答+引用来源（可溯源！）</div></div></div><div class="p sc-d"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">完整架构图</div><div class="fl"><div class="fs"><div class="icon">📄</div><h4>文档源</h4><p>PDF/Word/网页<br>数据库/API</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">✂️</div><h4>切片</h4><p>Chunking<br>200-1000字/段</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔢</div><h4>Embedding</h4><p>文本→向量<br>OpenAI/BGE</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">💾</div><h4>向量数据库</h4><p>Chroma/Pinecone<br>Milvus/Weaviate</p></div></div><div style="text-align:center;margin:8px 0;font-size:0.8rem;color:var(--gray)">↑ 离线索引 ——————————— ↓ 在线查询</div><div class="fl"><div class="fs"><div class="icon">❓</div><h4>用户问题</h4><p>自然语言</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔍</div><h4>语义检索</h4><p>向量相似度<br>Top-K匹配</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">📎</div><h4>Prompt增强</h4><p>问题+检索结果<br>组装完整Prompt</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🤖</div><h4>LLM生成</h4><p>基于资料回答<br>+引用来源</p></div></div></div></div><div class="p sc-c"><span class="pn">4</span><div class="pi"><div class="b"><strong>小白：</strong>语义检索和传统的关键词搜索有什么区别？</div><div class="vs"><div class="vs-s l"><div class="bi">🔤</div><h4 style="color:var(--red)">关键词搜索</h4><p>精确匹配字面内容<br>搜"请假"找不到"休假"<br>不理解语义<br>BM25/TF-IDF<br><br>✅ 精确查询强<br>❌ 语义理解差</p></div><div class="vs-m">VS</div><div class="vs-s r"><div class="bi">🧠</div><h4 style="color:var(--green)">语义搜索</h4><p>理解含义相似性<br>搜"请假"能找到"休假"<br>通过向量距离匹配<br>Embedding模型<br><br>✅ 语义理解强<br>❌ 精确匹配弱</p></div></div><div class="b r"><strong>AI博士：</strong>实际生产中最佳方案是<em>混合检索（Hybrid Search）</em>——同时用关键词和语义搜索，然后融合排序。这样两种搜索的优势互补，效果最好。</div></div></div><div class="p sc-b"><span class="pn">5</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ RAG分两阶段：离线索引（建知识库）+ 在线查询（搜索回答）<br>✅ 离线：文档加载→切片→Embedding→存入向量数据库<br>✅ 在线：问题Embedding→向量检索→Prompt增强→LLM生成<br>✅ 语义搜索理解含义（"请假"="休假"），关键词搜索精确匹配<br>✅ 混合检索（关键词+语义）是生产环境的最佳实践</div><div class="b r"><strong>AI博士：</strong>下一节深入<em>Embedding和向量</em>的原理——理解语义搜索到底是怎么做到的！👉</div></div></div></div></body></html>

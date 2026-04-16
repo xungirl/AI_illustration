@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>3.1 什么是Prompt？</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>3.1 什么是Prompt？</h1><div class="sub">你对AI说的每句话都是Prompt — 输出质量90%取决于此</div></div><div class="c"><div class="p sc-a"><span class="pn">1</span><div class="pi"><div class="b"><strong>小白：</strong>Prompt这个词到处都能看到，它到底是什么？跟普通的"提问"有区别吗？</div><div class="b r"><strong>AI博士：</strong><em>Prompt</em>就是你给AI模型的所有输入内容——问题、指令、背景信息、示例、约束条件的总和。它不只是一个"问题"，而是一整套<em>沟通策略</em>。</div><div class="ib">📌 <b>关键认知：</b>同一个模型（比如Claude 4.6），给它不同的Prompt，输出质量可以差10倍以上。Prompt质量是AI应用效果的<b>第一决定因素</b>，比模型选择更重要。</div></div></div><div class="p sc-c"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">差 Prompt vs 好 Prompt</div><div class="vs"><div class="vs-s l"><div class="bi">❌</div><h4 style="color:var(--red)">差的Prompt</h4><p style="text-align:left;font-size:0.78rem">"帮我写个方案"<br><br>问题：<br>• 没说什么方案<br>• 没说给谁看<br>• 没说什么格式<br>• 没说多长<br>• 没有背景信息<br><br>结果：AI只能猜，<br>输出泛泛而谈</p></div><div class="vs-m">VS</div><div class="vs-s r"><div class="bi">✅</div><h4 style="color:var(--green)">好的Prompt</h4><p style="text-align:left;font-size:0.78rem">"你是一位有10年经验的B2B SaaS产品经理。请为我们的项目管理工具写一份面向中小企业的推广方案。<br><br>要求：<br>1. 目标用户画像<br>2. 3个核心卖点<br>3. 推广渠道及预算分配<br>4. 用表格呈现，1000字左右"<br><br>结果：精准、结构化、可执行</p></div></div></div></div><div class="p sc-b"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">Prompt 的构成要素</div><div class="tg"><div class="tc"><div class="icon">🎭</div><h4>角色 (Role)</h4><p>告诉AI扮演谁<br>"你是资深架构师"<br><b>为什么有效：</b>激活模型中与该角色相关的知识模式</p></div><div class="tc"><div class="icon">🎯</div><h4>任务 (Task)</h4><p>明确要做什么<br>"写一份技术调研报告"<br><b>为什么有效：</b>让模型聚焦输出方向</p></div><div class="tc"><div class="icon">📋</div><h4>约束 (Constraint)</h4><p>限定格式和范围<br>"用Markdown表格，800字内"<br><b>为什么有效：</b>减少模型的输出空间</p></div><div class="tc"><div class="icon">📎</div><h4>上下文 (Context)</h4><p>提供背景信息<br>"我们是一家20人的创业公司…"<br><b>为什么有效：</b>让模型的回答贴合实际</p></div><div class="tc"><div class="icon">📝</div><h4>示例 (Examples)</h4><p>给出参考样本<br>"参考以下格式：…"<br><b>为什么有效：</b>比描述更高效地传达期望</p></div><div class="tc"><div class="icon">🔧</div><h4>输出格式 (Format)</h4><p>指定输出结构<br>"以JSON/表格/分点返回"<br><b>为什么有效：</b>程序可解析，减少后处理</p></div></div></div></div><div class="p sc-d"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">Prompt 的三种层级</div><table class="tb"><tr><th>层级</th><th>名称</th><th>内容</th><th>谁设定</th><th>用户可见</th></tr><tr><td>1️⃣</td><td><b>System Prompt</b></td><td>AI的底层人设和规则</td><td>开发者</td><td>❌ 不可见</td></tr><tr><td>2️⃣</td><td><b>User Prompt</b></td><td>用户的具体问题/指令</td><td>用户</td><td>✅ 可见</td></tr><tr><td>3️⃣</td><td><b>Assistant Prompt</b></td><td>AI之前的回复(多轮对话)</td><td>AI自己</td><td>✅ 可见</td></tr></table><div class="b r"><strong>AI博士：</strong>这三层组合在一起形成完整的Prompt。<em>System Prompt</em>是最关键的——它决定了AI的基本行为模式。比如Claude的System Prompt让它诚实、有帮助、无害；一个客服机器人的System Prompt会限制它只回答产品相关问题。</div><div class="ib">💡 <b>Agent开发中：</b>Prompt设计就是Harness的核心组件之一——CLAUDE.md / AGENTS.md 本质就是一份精心设计的System Prompt + 约束文档。</div></div></div><div class="p sc-a"><span class="pn">5</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ Prompt不只是问题，而是角色+任务+约束+上下文+示例+格式的组合<br>✅ Prompt质量是AI输出效果的第一决定因素（>模型选择）<br>✅ 好Prompt的核心：具体、明确、有约束、给示例<br>✅ Prompt分三层：System Prompt(底层人设) + User Prompt(用户指令) + 对话历史<br>✅ System Prompt是Agent/Harness设计的核心组件</div><div class="b r"><strong>AI博士：</strong>下一节教你<em>好Prompt的具体设计原则</em>——掌握这些你就能把AI用出3倍效果！👉</div></div></div></div></body></html>

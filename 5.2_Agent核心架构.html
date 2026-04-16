@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>5.2 Agent核心架构</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>5.2 Agent核心架构</h1><div class="sub">感知 → 规划 → 执行 → 反思 — Agent的运行循环</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="sfx" style="text-align:center">Agent 运行循环</div><div class="fl"><div class="fs"><div class="icon">👁️</div><h4>感知</h4><p>接收任务<br>理解意图<br>获取上下文</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🧠</div><h4>规划</h4><p>分解任务<br>制定步骤<br>选择工具</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔧</div><h4>执行</h4><p>调用工具<br>完成操作<br>获取结果</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔍</div><h4>反思</h4><p>评估结果<br>是否达标<br>要不要继续</p></div></div><div style="text-align:center;font-size:0.8rem;color:var(--purple);font-weight:700">↻ 循环执行直到任务完成或达到终止条件</div><div class="b r"><strong>AI博士：</strong>这个循环是所有Agent框架的核心。关键区别在于<em>规划</em>的策略和<em>反思</em>的深度。</div></div></div><div class="p sc-c"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">ReAct：最经典的Agent范式</div><div class="co co-g"><h4>🔄 ReAct = Reason(推理) + Act(行动)</h4><b>用户：</b>"北京明天适合户外活动吗？"<br><br><b>Thought 1：</b>我需要查北京明天的天气<br><b>Action 1：</b>调用 get_weather("北京", "明天")<br><b>Observation 1：</b>北京明天，晴，25°C，PM2.5: 35(优)<br><br><b>Thought 2：</b>天气晴好，气温舒适，空气质量优，适合户外。让我推荐几个活动<br><b>Action 2：</b>调用 search("北京户外活动推荐")<br><b>Observation 2：</b>颐和园、奥森公园、长城……<br><br><b>Thought 3：</b>信息足够了，可以给出完整建议<br><b>Final Answer：</b>"明天北京晴天25°C，空气质量优，非常适合户外活动！推荐：①颐和园 ②奥森公园 ③慕田峪长城……"</div><div class="ib">🔑 ReAct的关键：模型<b>交替进行推理和行动</b>，每步行动后观察结果再决定下一步。这比直接回答准确得多，因为它基于真实数据而非记忆。</div></div></div><div class="p sc-d"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">常见Agent架构模式</div><table class="tb"><tr><th>模式</th><th>原理</th><th>优点</th><th>适用场景</th></tr><tr><td><b>ReAct</b></td><td>推理-行动-观察循环</td><td>简单直观、通用性强</td><td>通用任务，工具调用</td></tr><tr><td><b>Plan-and-Execute</b></td><td>先规划完整方案再逐步执行</td><td>全局视野、减少反复</td><td>复杂多步任务</td></tr><tr><td><b>Reflection</b></td><td>执行后自我反思和纠错</td><td>提高质量、减少错误</td><td>需要高准确率的场景</td></tr><tr><td><b>Tree of Thoughts</b></td><td>探索多条推理路径选最优</td><td>处理高不确定性问题</td><td>数学、逻辑推理</td></tr><tr><td><b>LATS</b></td><td>蒙特卡洛树搜索+反思</td><td>在复杂空间中找最优解</td><td>代码生成、策略规划</td></tr></table></div></div><div class="p sc-a"><span class="pn">4</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ Agent核心循环：感知→规划→执行→反思→循环<br>✅ ReAct是最经典的Agent范式：Reason+Act交替进行<br>✅ 常见架构：ReAct(通用)、Plan-and-Execute(复杂任务)、Reflection(高质量要求)<br>✅ 规划策略和反思深度是区分Agent质量的关键</div><div class="b r"><strong>AI博士：</strong>下一节深入<em>工具调用和MCP协议</em>——Agent是怎么"长出手和脚"的！👉</div></div></div></div></body></html>

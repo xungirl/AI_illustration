@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>4.4 RAG优化技巧</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>4.4 RAG优化技巧</h1><div class="sub">切片 · 混合检索 · Reranking · Query改写 — 从能用到好用</div></div><div class="c"><div class="p sc-d"><span class="pn">1</span><div class="pi"><div class="b r"><strong>AI博士：</strong>基础RAG只是"能用"，要做到"好用"需要在每个环节优化。实际项目中<em>80%的时间花在优化上</em>。</div><div class="fl"><div class="fs"><div class="icon">✂️</div><h4>切片优化</h4><p>怎么切文档</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🔍</div><h4>检索优化</h4><p>怎么搜更准</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🏆</div><h4>排序优化</h4><p>怎么排更好</p></div><span class="fa">➡️</span><div class="fs"><div class="icon">🤖</div><h4>生成优化</h4><p>怎么答更对</p></div></div></div></div><div class="p sc-a"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">切片策略</div><div class="co co-b"><h4>✂️ 文档切片是RAG效果的第一关</h4><b>❌ 暴力固定长度切片：</b><br>每500字切一刀——可能把一个完整段落切成两半，破坏语义<br><br><b>✅ 语义感知切片：</b><br>• <b>按段落/章节切</b>：保持自然语义边界<br>• <b>递归切片</b>：先按大标题→小标题→段落→句子逐级细分<br>• <b>滑动窗口+重叠</b>：相邻Chunk有20%重叠，避免边界信息丢失<br><br><b>Chunk大小指南：</b><br>• FAQ/短文档：100-300字/Chunk<br>• 技术文档：300-800字/Chunk<br>• 长报告/书籍：500-1500字/Chunk<br><br>🔑 太小=缺乏上下文，太大=检索不精准。需要根据实际数据调试。</div></div></div><div class="p sc-c"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">检索优化</div><div class="tg"><div class="tc"><div class="icon">🔀</div><h4>混合检索</h4><p><b>向量检索+BM25关键词</b><br>两种方式互补<br>向量抓语义相似<br>BM25抓精确关键词<br>融合后效果提升15-25%<br><span class="tag-g tag">必做</span></p></div><div class="tc"><div class="icon">🔄</div><h4>Query改写</h4><p><b>用LLM改写用户问题</b><br>用户问题可能模糊<br>"怎么请假"→"公司年假<br>申请流程和审批规则"<br>改写后检索更精准<br><span class="tag tag">推荐</span></p></div><div class="tc"><div class="icon">🌳</div><h4>多路召回</h4><p><b>同时用多种策略检索</b><br>向量检索、关键词检索<br>知识图谱检索<br>结果去重合并<br>覆盖面更广<br><span class="tag-b tag">高级</span></p></div><div class="tc"><div class="icon">📑</div><h4>元数据过滤</h4><p><b>先按条件筛选再检索</b><br>按时间、来源、标签<br>先缩小范围<br>再做语义搜索<br>速度和精度双提升<br><span class="tag-o tag">实用</span></p></div></div></div></div><div class="p sc-e"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">Reranking 重排序</div><div class="co co-o"><h4>🏆 Reranking = 检索后的"二次面试"</h4><b>问题：</b>向量检索的Top-20结果中，真正最相关的可能不在最前面<br><br><b>方案：</b>用一个更强的模型（Cross-Encoder）对检索结果<b>精排</b><br><br><b>工作流：</b><br>1. 向量检索召回Top-20（粗筛，速度快）<br>2. Reranker对20条逐一打分（精排，效果好）<br>3. 取精排后的Top-5送给LLM<br><br><b>常用Reranker：</b><br>• Cohere Rerank（API服务，效果好）<br>• BGE-Reranker（开源，中文友好）<br>• Jina Reranker v2<br><br>🔑 <b>Reranking可以将检索相关性提升20-30%</b>，是投入产出比最高的优化手段之一。</div></div></div><div class="p sc-b"><span class="pn">5</span><div class="pi"><div class="sfx" style="text-align:center">评估指标</div><div class="co co-g"><h4>📊 RAG系统的核心评估维度</h4><b>检索质量：</b><br>• <b>召回率(Recall@K)</b>：相关文档有没有被找到？<br>• <b>精确率(Precision@K)</b>：找到的是不是真相关？<br>• <b>MRR(Mean Reciprocal Rank)</b>：相关文档排在第几？<br><br><b>生成质量：</b><br>• <b>忠实度(Faithfulness)</b>：回答是否忠于检索到的资料？<br>• <b>答案相关性</b>：回答是否真正解答了用户的问题？<br>• <b>有害拒绝率</b>：有资料时是否仍拒绝回答？<br><br>🔧 <b>评估工具：</b>RAGAS、TruLens、LangSmith都提供RAG自动评估。</div></div></div><div class="p sc-a"><span class="pn">6</span><div class="pi"><div class="co co-p"><h4>📝 第四章总结</h4>经过4节学习，你已经完整理解了RAG：<br><br>✅ <b>4.1</b> 为什么需要 — 解决知识截止、幻觉、无私有知识三大痛点<br>✅ <b>4.2</b> 工作原理 — 离线索引+在线查询，语义搜索+关键词搜索<br>✅ <b>4.3</b> 向量Embedding — 文字→高维向量，相似度搜索<br>✅ <b>4.4</b> 优化技巧 — 切片策略、混合检索、Reranking、评估指标<br><br>🔜 <b>下一章预告：</b>第五章<em>AI Agent智能体</em>——从"对话"到"做事"的质变！Agent = LLM + 工具 + 规划 + 记忆。这是当前AI最前沿的方向！</div></div></div></div></body></html>

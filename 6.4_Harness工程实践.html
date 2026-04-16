@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>6.4 Harness工程实践</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>6.4 Harness工程实践</h1><div class="sub">CLAUDE.md · Hooks · Checkpoint — 实战落地模式</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="sfx" style="text-align:center">CLAUDE.md / AGENTS.md</div><div class="co co-b"><h4>📄 Agent的"说明书"</h4>放在项目根目录，Agent启动时自动读取。内容包括：<br><br><b>1. 身份和职责</b><br>"你是XXX项目的开发Agent，负责根据需求实现功能并通过测试"<br><br><b>2. 技术栈和规范</b><br>"项目使用Python 3.12 + FastAPI + PostgreSQL。代码风格遵循PEP 8"<br><br><b>3. 可以做的事</b><br>"可以读写src/目录下的文件，可以运行pytest，可以查询数据库"<br><br><b>4. 绝对不能做的事</b><br>"不得修改config/prod.yaml，不得直接操作生产数据库，不得删除migration文件"<br><br><b>5. 工作流程</b><br>"收到需求后：先写设计文档→实现代码→写单元测试→运行测试→通过后提PR"<br><br><b>6. 遇到问题时</b><br>"如果测试3次仍失败，停止并报告。遇到架构决策时，先征求人工确认。"</div></div></div><div class="p sc-d"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">Hooks 和 Checkpoint</div><div class="tg"><div class="tc"><div class="icon">🪝</div><h4>Hooks（钩子）</h4><p><b>在关键节点插入逻辑</b><br><br>• 每次工具调用前：检查权限<br>• 每次代码生成后：自动lint<br>• 每次文件修改后：运行测试<br>• 检测到错误循环：强制终止<br><br>类比：生产线上的质检站<br>每个环节都过一道检查</p></div><div class="tc"><div class="icon">💾</div><h4>Checkpoint（检查点）</h4><p><b>定期保存任务进度</b><br><br>• 每完成一个子任务存档<br>• 包含：已完成步骤、中间结果<br>&nbsp;&nbsp;当前状态、待做任务<br>• 失败时可以回退到上个存档<br>• 长任务跨会话时恢复<br><br>类比：游戏存档<br>死了从存档点重来</p></div><div class="tc"><div class="icon">🔒</div><h4>权限控制</h4><p><b>最小权限原则</b><br><br>• 文件系统：只能访问指定目录<br>• 网络：只能请求白名单域名<br>• 命令：禁止rm -rf、sudo等<br>• 数据：脱敏处理敏感信息<br><br>类比：公司门禁卡<br>不同级别不同权限</p></div></div></div></div><div class="p sc-a"><span class="pn">3</span><div class="pi"><div class="co co-g"><h4>💡 Harness设计的核心原则</h4>1️⃣ <b>轻量化</b>：不要过度设计——模型升级后，复杂逻辑可能没用了<br>2️⃣ <b>可拆卸</b>：Harness的每个组件应该可以独立替换<br>3️⃣ <b>可观测</b>：所有Agent行为必须有日志，可追溯可审计<br>4️⃣ <b>渐进式</b>：从最简单的Harness开始，遇到问题再加组件<br>5️⃣ <b>Sensor优先</b>：先有检测能力再有纠正能力——不能检测的问题无法修复</div><div class="b r"><strong>AI博士：</strong>记住：<em>Start simple, add complexity only when you need it.</em> Manus重写了5次不是因为第一次设计不好，而是因为需求和模型能力都在变。</div></div></div></div></body></html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>3.2 好Prompt的设计原则</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>3.2 好Prompt的设计原则</h1><div class="sub">CRAFT框架 — 5步写出专业级Prompt</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="b r"><strong>AI博士：</strong>我总结了一个<em>CRAFT框架</em>，帮你系统化地写Prompt：</div><div class="tg"><div class="tc"><div class="icon">🎭</div><h4>C = Character</h4><p><b>角色设定</b><br>你是谁？<br>"你是一位10年经验的<br>数据分析师"</p></div><div class="tc"><div class="icon">📋</div><h4>R = Request</h4><p><b>明确请求</b><br>做什么？<br>"分析这份销售数据<br>找出增长趋势"</p></div><div class="tc"><div class="icon">📎</div><h4>A = Audience</h4><p><b>目标受众</b><br>给谁看？<br>"给CEO看的季度报告<br>简洁、重结论"</p></div><div class="tc"><div class="icon">📐</div><h4>F = Format</h4><p><b>输出格式</b><br>怎么输出？<br>"Markdown表格+图表<br>不超过1页"</p></div><div class="tc"><div class="icon">🔧</div><h4>T = Tone</h4><p><b>语气风格</b><br>什么调性？<br>"专业但不晦涩<br>适当使用数据支撑"</p></div></div></div></div><div class="p sc-c"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">实战案例对比</div><div class="co co-r"><h4>❌ 反面案例</h4>Prompt："帮我分析一下数据"<br><br>问题：没说什么数据、怎么分析、给谁看、什么格式<br>AI只能输出一段泛泛的分析方法论文字</div><div class="co co-g"><h4>✅ CRAFT版</h4>Prompt：<br>"<b>[C]</b> 你是一位资深电商数据分析师<br><b>[R]</b> 请分析以下3个月的销售数据，找出：①哪些品类增长最快 ②哪些SKU需要清仓 ③下季度备货建议<br><b>[A]</b> 这份报告给运营总监看，他关注ROI和库存周转率<br><b>[F]</b> 用表格展示TOP10品类，附带趋势分析段落，总长不超过800字<br><b>[T]</b> 数据驱动、结论先行、建议可执行"<br><br>结果：精准、结构化、可直接呈现给领导</div></div></div><div class="p sc-d"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">5 条黄金法则</div><div class="co co-b"><h4>🏆 Prompt设计黄金法则</h4><b>1️⃣ 具体 > 模糊</b><br>差："写好一点" → 好："用数据支撑论点，每段首句为主题句，总结用3个要点"<br><br><b>2️⃣ 正面指令 > 负面禁止</b><br>差："不要写太长" → 好："控制在500字以内，每段不超过100字"<br><br><b>3️⃣ 示例 > 描述</b><br>差："用专业的格式" → 好："参考以下格式：[标题] [日期] [摘要] [正文]……"<br><br><b>4️⃣ 分步拆解 > 一次性大任务</b><br>差："写一份完整的商业计划书" → 好："先写市场分析部分，800字，包含市场规模、竞争格局、用户画像"<br><br><b>5️⃣ 迭代 > 一步到位</b><br>先快速出稿 → 指出具体修改点 → 逐步逼近理想效果。不要期望一次完美。</div></div></div><div class="p sc-a"><span class="pn">4</span><div class="pi"><div class="b"><strong>小白：</strong>有没有一些万能的Prompt开头模板？</div><div class="co co-o"><h4>🧰 高频Prompt模板</h4><b>分析型：</b>"请从[角度]分析[主题]，包含[维度1]、[维度2]、[维度3]，用表格对比"<br><br><b>写作型：</b>"你是[角色]，请为[受众]写一篇关于[主题]的[体裁]，要求[风格]，[字数]字"<br><br><b>代码型：</b>"用[语言]实现[功能]，要求：[约束]。先写思路，再写代码，最后写测试用例"<br><br><b>决策型：</b>"我面临[决策]，备选方案有[A/B/C]。请从[维度]分析各方案的优劣，给出推荐及理由"<br><br><b>审查型：</b>"请审查以下[内容类型]，从[维度]检查问题，用表格列出：问题位置、问题描述、修改建议"</div><div class="b r"><strong>AI博士：</strong>这些模板覆盖了80%的日常使用场景。关键是<em>根据实际情况填充具体内容</em>，不要留模糊的占位符。</div></div></div><div class="p sc-b"><span class="pn">5</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ CRAFT框架：Character(角色) + Request(请求) + Audience(受众) + Format(格式) + Tone(语气)<br>✅ 5条黄金法则：具体>模糊、正面>负面、示例>描述、分步>一步、迭代>完美<br>✅ 掌握5类高频Prompt模板可覆盖80%场景<br>✅ Prompt设计是可练习的技能——用得越多越熟练</div><div class="b r"><strong>AI博士：</strong>下一节学习<em>进阶Prompt技巧</em>——Few-shot、CoT、结构化输出，让AI的回答质量再上一个台阶！👉</div></div></div></div></body></html>

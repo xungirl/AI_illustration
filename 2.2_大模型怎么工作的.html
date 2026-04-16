@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>2.2 大模型怎么工作的？</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;700;900&family=Bangers&display=swap');
+:root{--bg:#FFF8E7;--border:#1a1a2e;--red:#E63946;--blue:#457B9D;--yellow:#F4A261;--green:#2A9D8F;--purple:#6C5CE7;--pink:#FF6B9D;--dark:#1a1a2e;--gray:#64748B}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);font-family:'Noto Sans SC',sans-serif}
+.title{text-align:center;padding:30px 20px 10px}
+.title h1{font-family:'ZCOOL KuaiLe',cursive;font-size:clamp(1.6rem,4.5vw,2.6rem);color:var(--red);text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--yellow);letter-spacing:4px}
+.title .sub{font-family:'Ma Shan Zheng',cursive;font-size:clamp(0.85rem,2vw,1.1rem);color:var(--blue);margin-top:5px;letter-spacing:2px}
+.c{max-width:900px;margin:0 auto;padding:12px 16px}
+.p{background:#fff;border:3px solid var(--border);border-radius:10px;position:relative;overflow:hidden;box-shadow:5px 5px 0 var(--dark);margin-bottom:18px}
+.p:hover{transform:translateY(-2px);transition:transform .3s}
+.pi{padding:18px 22px;position:relative}
+.pn{position:absolute;top:-2px;left:-2px;background:var(--red);color:#fff;font-family:'Bangers',cursive;font-size:1.1rem;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:0 0 10px 0;z-index:5;border-right:2px solid var(--dark);border-bottom:2px solid var(--dark)}
+.b{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:11px 15px;font-size:0.88rem;line-height:1.75;max-width:90%;box-shadow:2px 2px 0 var(--dark);margin:7px 0}
+.b.r{margin-left:auto}
+.b strong{color:var(--red)}.b em{color:var(--blue);font-style:normal;font-weight:700}.b .hl{color:var(--purple);font-weight:700}.b .g{color:var(--green);font-weight:700}.b .or{color:#DD6B20;font-weight:700}
+.sfx{font-family:'Bangers',cursive;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--red);text-shadow:2px 2px 0 var(--yellow),3px 3px 0 var(--dark);transform:rotate(-4deg);display:inline-block;margin:5px 0}
+.ib{background:rgba(255,255,255,0.9);border:2px dashed var(--blue);border-radius:10px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:10px 0}
+.tc{background:rgba(255,255,255,0.92);border:2.5px solid var(--dark);border-radius:12px;padding:12px;text-align:center;transition:transform .2s}
+.tc:hover{transform:scale(1.03) rotate(-1deg)}
+.tc .icon{font-size:2rem;margin-bottom:4px}
+.tc h4{font-family:'ZCOOL KuaiLe',cursive;font-size:0.9rem;color:var(--purple);margin-bottom:3px}
+.tc p{font-size:0.73rem;color:#444;line-height:1.45}
+.vs{display:flex;margin:10px 0;border-radius:10px;overflow:hidden;border:2.5px solid var(--dark)}
+.vs-s{flex:1;padding:14px;text-align:center}
+.vs-s.l{background:#FFF5F5}.vs-s.r{background:#F0FFF4}
+.vs-m{background:var(--dark);color:#fff;display:flex;align-items:center;justify-content:center;padding:0 12px;font-weight:900;font-size:1rem}
+.vs-s .bi{font-size:2rem;margin-bottom:5px}
+.vs-s h4{font-size:0.9rem;font-weight:700;margin-bottom:4px}
+.vs-s p{font-size:0.75rem;color:#4A5568;line-height:1.45}
+.fl{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0;flex-wrap:wrap}
+.fs{background:#fff;border:2px solid var(--dark);border-radius:10px;padding:8px 12px;text-align:center;min-width:90px}
+.fs .icon{font-size:1.5rem}.fs h4{font-size:0.8rem;margin-top:2px}.fs p{font-size:0.68rem;color:#666}
+.fa{font-size:1.2rem;color:var(--purple);font-weight:900}
+.co{border-radius:8px;padding:12px 14px;margin:10px 0;font-size:0.82rem;line-height:1.65}
+.co-b{background:#EBF8FF;border-left:3px solid #3182CE}.co-p{background:#FAF5FF;border-left:3px solid #805AD5}
+.co-g{background:#F0FFF4;border-left:3px solid #38A169}.co-o{background:#FFFAF0;border-left:3px solid #DD6B20}
+.co-r{background:#FFF5F5;border-left:3px solid #E53E3E}.co-y{background:#FFFFF0;border-left:3px solid #D69E2E}
+.co h4{font-weight:700;margin-bottom:5px;font-size:0.88rem}
+.tb{width:100%;border-collapse:collapse;margin:10px 0;font-size:0.78rem}
+.tb th{background:var(--dark);color:#fff;padding:8px 10px;text-align:left;font-size:0.8rem}
+.tb td{padding:7px 10px;border-bottom:1px solid #E2E8F0}
+.tb tr:nth-child(even){background:#F7FAFC}
+.tb tr:hover{background:#EBF8FF}
+.sc-a{background:linear-gradient(135deg,#E8F8F5,#D5F5E3 50%,#FCF3CF)}
+.sc-b{background:linear-gradient(135deg,#EBF5FB,#D6EAF8)}
+.sc-c{background:linear-gradient(135deg,#FDEDEC,#F5EEF8)}
+.sc-d{background:linear-gradient(135deg,#FEF9E7,#FDEBD0)}
+.sc-e{background:linear-gradient(135deg,#E8DAEF,#D2B4DE 30%,#AED6F1)}
+.sc-f{background:linear-gradient(135deg,#D5F5E3,#ABEBC6)}
+.sc-dk{background:linear-gradient(180deg,#1a1a2e,#16213e 50%,#0f3460);color:#fff}
+.row{display:flex;gap:14px}.row>.p{flex:1}
+.stat{display:flex;justify-content:space-around;margin:12px 0;gap:8px;flex-wrap:wrap}
+.stat-item{text-align:center;min-width:80px}
+.stat-item .num{font-family:'Bangers',cursive;font-size:1.8rem;color:var(--purple)}
+.stat-item .label{font-size:0.72rem;color:var(--gray)}
+.tag{display:inline-block;background:var(--purple);color:#fff;padding:2px 10px;border-radius:12px;font-size:0.72rem;margin:2px 3px}
+.tag-b{background:var(--blue)}.tag-g{background:var(--green)}.tag-r{background:var(--red)}.tag-o{background:#DD6B20}
+@media(max-width:640px){.row{flex-direction:column}.tg{grid-template-columns:1fr}}
+</style></head><body><div class="title"><h1>2.2 大模型怎么工作的？</h1><div class="sub">预训练 → SFT → RLHF — 三步炼成超级学霸</div></div><div class="c"><div class="p sc-b"><span class="pn">1</span><div class="pi"><div class="b"><strong>小白：</strong>大模型是怎么从"一堆参数"变成ChatGPT这样能聊天的？</div><div class="b r"><strong>AI博士：</strong>分三个阶段，就像培养一个学生：先<em>博览群书</em>，再<em>学会对话</em>，最后<em>学会做人</em>。</div></div></div><div class="p sc-a"><span class="pn">2</span><div class="pi"><div class="sfx" style="text-align:center">第一步：预训练 Pre-training</div><div class="co co-b"><h4>📖 目标：学会语言规律和世界知识</h4><b>方法：</b>在互联网规模的文本上做"完形填空"<br><b>任务：</b>给定前面的文字，预测下一个字（Next Token Prediction）<br><br><b>示例：</b><br>输入：「今天北京的天气非常」<br>模型预测：「好」(概率0.35)「晴」(0.28)「热」(0.15)...<br><br><b>关键数据：</b><br>• 训练数据：数万亿Token（整个互联网、书籍、代码、论文）<br>• 训练时长：数周~数月，消耗数千万美元算力<br>• 学到了什么：语法、语义、推理、世界知识、编程能力……<br><br>⚠️ 预训练后的模型很有"知识"，但不会"聊天"——它只会接话（补全文本），不会按指令回答问题。</div></div></div><div class="p sc-c"><span class="pn">3</span><div class="pi"><div class="sfx" style="text-align:center">第二步：SFT 监督微调</div><div class="co co-g"><h4>🎯 目标：学会按指令回答问题</h4><b>方法：</b>用人工编写的"问题-高质量回答"数据对来训练<br><b>数据量：</b>通常只需要数万~数十万条高质量对话（远少于预训练）<br><br><b>示例训练数据：</b><br>问："请解释什么是光合作用"<br>答："光合作用是植物利用阳光将二氧化碳和水转化为葡萄糖和氧气的过程……"<br><br><b>SFT之后的变化：</b><br>• 从"接话"变成"回答" ✅<br>• 能遵循指令格式 ✅<br>• 回答更有结构性 ✅<br>• 但可能啰嗦/讨好/回避问题 ⚠️<br><br>🔑 <b>数据质量极其重要：</b>SFT数据的质量直接决定模型的对话风格和能力上限。"少而精"胜过"多而杂"。</div></div></div><div class="p sc-d"><span class="pn">4</span><div class="pi"><div class="sfx" style="text-align:center">第三步：RLHF 人类反馈强化学习</div><div class="co co-o"><h4>👨‍🏫 目标：学会什么回答"更好"</h4><b>全称：</b>Reinforcement Learning from Human Feedback<br><br><b>过程分两步：</b><br><br><b>Step 1 — 训练奖励模型(RM)：</b><br>• 对同一个问题，让模型生成多个回答<br>• 人类标注员对这些回答排序（A>B>C）<br>• 用排序数据训练一个"评分模型"<br><br><b>Step 2 — PPO强化学习优化：</b><br>• 模型生成回答 → 奖励模型打分 → 模型根据分数调整<br>• 高分回答的生成概率增加，低分回答的概率减少<br>• 重复数万次，模型越来越符合人类偏好<br><br><b>RLHF后的提升：</b><br>• 回答更有用、更安全、更诚实 ✅<br>• 减少有害/偏见输出 ✅<br>• 拒绝不合理请求 ✅<br>• 这一步让AI从"能说话"进化到"说人话" 🚀</div></div></div><div class="p sc-e"><span class="pn">5</span><div class="pi"><div class="sfx" style="text-align:center">Token：大模型的语言单位</div><div class="b"><strong>小白：</strong>Token到底是什么？为什么大家都在说Token？</div><div class="b r"><strong>AI博士：</strong>大模型不是按"字"或"词"来处理文本的，而是按<em>Token</em>。Token是模型切分文本的最小单位。</div><div class="co co-b"><h4>🔤 Token速查</h4>• 英文：1个Token ≈ 4个字母 ≈ 0.75个单词<br>• 中文：1个Token ≈ 1-2个汉字<br>• "Hello World" = 2 Tokens<br>• "人工智能" ≈ 2-4 Tokens（取决于分词器）<br><br><b>上下文窗口（Context Window）：</b><br>• GPT-4o：128K Token ≈ 一本300页的书<br>• Claude 3.5：200K Token ≈ 约500页<br>• Gemini 1.5：1M Token ≈ 约2500页<br><br>上下文窗口决定了模型能"记住"多少内容。超出窗口的早期内容会被遗忘——这就是为什么Agent需要记忆管理！</div></div></div><div class="p sc-b"><span class="pn">6</span><div class="pi"><div class="sfx" style="text-align:center">推理：逐字生成的秘密</div><div class="b r"><strong>AI博士：</strong>当你发出一个问题，大模型是这样生成回答的：</div><div class="co co-p"><h4>🔄 自回归生成过程</h4>输入：「什么是机器学习？」<br><br>第1步 → 生成：「机」（概率最高的下一个Token）<br>第2步 → 生成：「器」（给定"机"后概率最高的）<br>第3步 → 生成：「学」<br>第4步 → 生成：「习」<br>第5步 → 生成：「是」<br>……逐Token生成，直到模型输出结束符号<br><br><b>关键细节：</b><br>• 不是随机选，而是按概率分布采样<br>• <b>Temperature</b>参数控制随机性：低=更确定，高=更创意<br>• <b>Top-p</b>参数控制候选范围<br>• 生成是<b>单向的</b>——已生成的字不会被修改</div><div class="ib">💡 这就解释了为什么AI有时会"一本正经地胡说"——它只是在做概率预测，不是在"查字典"。每个字都是基于前文最可能的延续，但概率高不等于事实正确。</div></div></div><div class="p sc-a"><span class="pn">7</span><div class="pi"><div class="co co-p"><h4>📝 本节要点</h4>✅ 大模型训练三步走：预训练（学知识）→ SFT（学对话）→ RLHF（学人话）<br>✅ 预训练的核心任务：预测下一个Token，数据量万亿级<br>✅ SFT用少量高质量对话数据让模型学会按指令回答<br>✅ RLHF通过人类偏好排序+强化学习，让回答更有用更安全<br>✅ Token是大模型的最小单位，上下文窗口决定记忆容量<br>✅ 推理是自回归过程——逐Token生成，概率高≠事实正确</div><div class="b r"><strong>AI博士：</strong>下一节带你认识<em>当前主流的大模型</em>——GPT/Claude/Gemini/国产模型各有什么特点和适用场景！👉</div></div></div></div></body></html>
